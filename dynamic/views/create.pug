@@ -1,0 +1,27 @@
+extends layout 
+
+block body 
+  .w3-card-4.w3-margin.w3-white
+    .w3-container
+      form.w3-panel(action=`/post/create` method='post')
+        h4
+          label(for="postTitle") Title:
+        h5
+          input.w3-input.w3-margin-bottom(type="text"
+                name="postTitle"
+                placeholder="post title"
+                value=postTitle)
+        h4
+          label(for="postTitle") Tags:
+        h5
+          input.w3-input.w3-margin-bottom(type="text"
+                name="postTags"
+                placeholder="General, Discussion, Fiction..."
+                value=postTags)
+        h4 
+          label(for="postContent") Post body:
+            textarea.w3-input.taTall(type="textarea" name="postContent" id="postContent" placeholder="your thoughts here...") #{postContent}
+        button.w3-button.w3-padding-large.w3-black.w3-border.w3-margin-bottom.inline SUBMIT POST &raquo;
+      .w3-container
+        a.inline(href="/home")
+          button.w3-button.w3-padding-large.w3-white.w3-border.w3-margin-bottom CANCEL 

@@ -1,0 +1,46 @@
+doctype html
+head
+  title Launch School Forum
+  meta(content="text/html; charset=UTF-8")
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  link(rel='stylesheet' href='/stylesheets/style.css')
+  link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway')
+  style.
+    body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+//
+  w3-content defines a container for fixed size centered content,
+  and is wrapped around the whole page content, except for the footer in this example
+.w3-content(style='max-width:1400px')
+  // Header
+  header.w3-container.w3-center.w3-padding-32
+    h1
+      a(href="/home")  PAGE NUMBER
+    p
+      | Welcome to the forum of 
+      span.w3-tag Book Lovers
+
+  .w3-container.w3-center
+    - let kinds = Object.keys(flash || {});
+      if kinds.length > 0
+        ul.ulFlash
+          each kind in kinds
+            each message in flash[kind]
+              li.flash(class=kind)= message
+.w3-content
+  .w3-card-4.w3-margin.w3-white.sign-in
+    .w3-container
+      form.w3-panel(action=`/sign-in` method='post')
+        h4
+          label(for="username") Username:
+        h5
+          input.w3-input.w3-margin-bottom(type="text"
+                name="username"
+                placeholder=`...`)
+        h4
+          label(for="password") Password:
+        h5
+          input.w3-input.w3-margin-bottom(type="password"
+                name="password"
+                placeholder=`...`)
+        button.w3-button.w3-padding-large.w3-black.w3-border.w3-margin-bottom SIGN-IN &raquo;
+

@@ -1,0 +1,55 @@
+extends layout 
+
+block body 
+  if post 
+    .w3-card-4.w3-margin.w3-white
+      if post.image_ref
+        img(src=`/images/${post.image_ref}` alt='Nature' style='width:100%')
+      .w3-container
+        h3
+          b #{post.title} 
+        span #{post.username}  -  
+        span.w3-opacity #{post.date_created}
+        each tag in post.tags
+            p.w3-tag.w3-light-grey.w3-small.w3-margin-bottom.w3-hoverable #{tag}
+      .w3-container
+        each line in post.content.split("\n")
+          p #{line}
+      if username === post.username
+        .w3-container
+          a(href=`/post/edit/${post.id}`)
+            button.w3-button.w3-padding-large.w3-white.w3-border.w3-margin-bottom.inline EDIT POST >>
+          form.delete(action=`/post/delete/${post.id}` method="post")
+            button.w3-button.w3-padding-large.w3-black.w3-border.w3-margin-bottom.inline(type="submit") DELETE POST >>
+    .w3-card-4.w3-margin.w3-white
+      if post.comments 
+        each comment in post.comments 
+          .w3-container
+            h5
+              span #{comment.username}
+            .w3-opacity #{comment.date_created}
+          .w3-container
+            each line in comment.comment_text.split("\n")
+              p #{line}
+          if username === comment.username
+            .w3-container
+              a(href=`/comment/edit/${post.id}/${comment.id}`)
+                button.w3-button.w3-padding-small.w3-white.w3-border.w3-margin-bottom.inline EDIT >>
+              form.delete(action=`/comment/delete/${post.id}/${comment.id}` method="post")
+                button.w3-button.w3-padding-small.w3-black.w3-border.w3-margin-bottom.inline(type="submit") DELETE >>
+          hr
+      else 
+          .w3-container
+            p Looks like there aren't any comments, maybe you should be the first.
+      .w3-container
+        form(action=`/comment/add/${post.id}` method='post')
+          textarea.w3-input(type="text" name="comment" id="comment" placeholder="your thoughts here...") #{comment}
+          button.w3-button.w3-padding-large.w3-black.w3-border.w3-margin-bottom SUBMIT COMMENT &raquo;
+
+  else
+    .w3-card-4.w3-margin.w3-white
+      .w3-container
+        h3
+          b Sorry looks like this post doesn't exist...
+      .w3-container
+        p Check out our home page for any new posts or click one of the links to the right.

@@ -1,0 +1,102 @@
+doctype html
+head
+  title Page Number
+  meta(content="text/html; charset=utf-8")
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  link(rel='stylesheet' href='/stylesheets/style.css')
+  link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway')
+  style.
+    body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+  script(src="/javascripts/application.js")
+  
+//
+  w3-content defines a container for fixed size centered content,
+  and is wrapped around the whole page content, except for the footer in this example
+.w3-content(style='max-width:1400px')
+  // Header
+  header.w3-container.w3-center.w3-padding-32
+    h1
+      a(href="/home")  PAGE NUMBER
+    p
+      | Welcome to the forum of 
+      span.w3-tag Book Lovers
+
+  .w3-container.w3-center
+    - let kinds = Object.keys(flash || {});
+      if kinds.length > 0
+        ul.ulFlash
+          each kind in kinds
+            each message in flash[kind]
+              li.flash(class=kind)= message
+  
+  // Grid
+  .w3-row
+    // Blog entries
+    .w3-col.l8.s12
+      // Blog entry
+
+      block body
+
+    block extras
+      // Introduction menu
+      .w3-col.l4
+        .w3-card.w3-margin.w3-margin-top
+          span.w3-container.w3-center.w3-display-topright
+            p.w3-container 
+              span.w3-tag Signed in as:
+              |  #{username}
+            .w3-container.w3-center
+              form(action="/home/my-posts" method="get")
+                button.w3-button.w3-padding-large.w3-white.w3-border.w3-margin-bottom VIEW MY POSTS >> 
+              form(action="/sign-in/sign-out" method="post")
+                button.w3-button.w3-padding-large.w3-white.w3-border.w3-margin-bottom SIGN-OUT >> 
+            .w3-container
+              a(href="/post/create") 
+                button.w3-button.w3-padding-large.w3-black.w3-border.long
+                            b CREATE POST &raquo;
+        hr
+        // About Card
+        .w3-card.w3-margin.w3-margin-top
+          img(src='/images/books-in-shelves.jpg' style='width:100%')
+          .w3-container.w3-white
+            h4
+              b Page Number
+            p
+              | A niche for reader's anywhere and everywhere. Discuss books, modern or classic, good or bad, anything with pages.
+            
+        hr
+        // Posts
+        if popularPosts
+          .w3-card.w3-margin
+            .w3-container.w3-padding
+              h4 Popular Posts
+            ul.w3-ul.w3-hoverable.w3-white
+              each post in popularPosts
+                a(href=`/post/view/${post.id}`)
+                  li.w3-padding-16
+                    if post.image_ref
+                      img.w3-left.w3-margin-right(src=`/images/${post.image_ref}` alt='Image' style='width:50px')
+                    span.w3-large ⭐ #{post.title}
+                    br
+                    span #{`${post.content.split(" ").slice(0, 10).join(" ")}...`}
+          hr
+        // Labels / tags
+        .w3-card.w3-margin
+          .w3-container.w3-padding
+            h4 Tags
+          .w3-container.w3-white
+            p
+              each tag in tags
+                a(href=`/home/filter/${tag.tag_name}`).w3-tag.w3-light-grey.w3-small.w3-margin-bottom.w3-hoverable #{tag.tag_name}
+        // END Introduction Menu
+    // END GRID
+  br
+  // END w3-content
+
+
+
+// Footer
+footer.w3-container.w3-dark-grey.w3-padding.w3-margin-top.footer
+  p
+    | Powered by 
+    a(href='https://www.w3schools.com/w3css/default.asp' target='_blank') w3.css

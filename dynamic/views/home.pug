@@ -1,0 +1,72 @@
+extends layout
+
+block body
+  if posts && page <= totalPages
+    each post in posts
+      .w3-card-4.w3-margin.w3-white
+        .w3-container
+          h3
+            b #{post.title} 
+          span #{post.username}  -  
+          span.w3-opacity #{post.date_created}  
+          each tag in post.tags
+            p.w3-tag.w3-light-grey.w3-small.w3-margin-bottom.w3-hoverable #{tag}
+        .w3-container
+          p #{`${post.content.split(" ").slice(0, 45).join(" ")}...`}
+          .w3-row
+            .w3-col.m8.s12
+              p
+                a(href=`/post/view/${post.id}`)
+                  button.w3-button.w3-padding-large.w3-white.w3-border READ MORE &raquo;
+            .w3-col.m4.w3-hide-small
+              p
+                span.w3-padding-large.w3-right
+                  b Comments &nbsp;
+                  span.w3-tag #{post.commentCount}
+      hr
+    .w3-container
+      .w3-center
+        if page > 1
+          a(href=`${url}` + `?page=${Number(page) - 1}`)
+            button.w3-button.w3-black.w3-padding-large.w3-margin-bottom  Previous
+        else 
+          button.w3-button.w3-black.w3-disabled.w3-padding-large.w3-margin-bottom  Previous
+        if totalPages > 1
+          -var index = 1;
+          while index <= totalPages && index < 6
+            a.w3-badge(class=`${page === index ? "w3-black" : "w3-light-grey"}` href=`${url}` + `?page=${index}`) #{index++}
+
+        if page < totalPages
+          a(href=`${url}` + `?page=${Number(page) + 1}`)
+            button.w3-button.w3-black.w3-padding-large.w3-margin-bottom Next &raquo;
+        else 
+          button.w3-button.w3-black.w3-padding-large.w3-margin-bottom.w3-disabled Next &raquo;
+  else if page > totalPages && totalPages > 0
+    .w3-card-4.w3-margin.w3-white
+    .w3-container
+      h3
+        b 404 ERROR: Posts not found
+      h5
+        | Looks like your page number is invalid...
+    .w3-container
+      .w3-row
+        .w3-col.m8.s12
+          p
+            a.w3-button.w3-black.w3-padding-large.w3-margin-bottom(href="/home")  GO HOME &raquo;
+    hr
+  else  
+    .w3-card-4.w3-margin.w3-white
+      .w3-container
+        h3
+          b Sorry looks like there aren't any posts here...
+        h5
+          | Maybe you'd like to make one 😉
+      .w3-container
+        .w3-row
+          .w3-col.m8.s12
+            p
+              button.w3-button.w3-padding-large.w3-white.w3-border
+                b CREATE POST &raquo;
+    hr
+  // END BLOG ENTRIES
+

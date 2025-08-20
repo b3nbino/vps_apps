@@ -1,0 +1,30 @@
+extends layout 
+
+block body 
+  if post 
+    .w3-card-4.w3-margin.w3-white
+      if post.image_ref
+        img(src=`/images/${post.image_ref}` alt='Nature' style='width:100%')
+      .w3-container
+        h3
+          b #{post.title} 
+        span.w3-opacity #{post.date_created}
+        each tag in post.tags
+            p.w3-tag.w3-light-grey.w3-small.w3-margin-bottom.w3-hoverable #{tag}
+      .w3-container
+        p #{post.content}
+    .w3-card-4.w3-margin.w3-white
+      .w3-container
+        form(action=`/comment/edit/${post.id}/${comment.id}` method='post')
+          textarea.w3-input(type="text" name="comment" id="comment" placeholder="your thoughts here...") #{comment.comment_text || comment}
+          button.w3-button.w3-padding-large.w3-black.w3-border.w3-margin-bottom.inline SUBMIT CHANGES >> &raquo;
+        a.inline(href="/home")
+          button.w3-button.w3-padding-large.w3-white.w3-border.w3-margin-bottom CANCEL
+
+  else
+    .w3-card-4.w3-margin.w3-white
+      .w3-container
+        h3
+          b Sorry looks like this post doesn't exist...
+      .w3-container
+        p Check out our home page for any new posts or click one of the links to the right.
